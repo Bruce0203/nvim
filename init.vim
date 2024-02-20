@@ -1,4 +1,4 @@
-# ------ basics ------
+" ------ basics ------
 set encoding=utf-8
 syntax enable
 filetype plugin indent on
@@ -7,19 +7,19 @@ set nowritebackup
 set updatetime=300
 set signcolumn=yes
 
-# ------ plugins ------
+" ------ plugins ------
 call plug#begin('~/.vim/plugged')
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'flazz/vim-colorschemes'
-" Plug 'vim-airline/vim-airline'
-"if has('nvim')
-"  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-"  Plug 'Shougo/denite.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+Plug 'vim-airline/vim-airline'
+if has('nvim')
+  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
@@ -27,7 +27,7 @@ Plug 'mhinz/vim-startify'
 call plug#end()
 
 
-# ------ NERDTree ------
+" ------ NERDTree ------
 set number
 set t_Co=256   " This is may or may not needed.
 set laststatus=2
@@ -61,7 +61,7 @@ nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
 
 
 
-# ------ Coc.nvim ------
+" ------ Coc.nvim ------
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call ShowDocumentation()<CR>
