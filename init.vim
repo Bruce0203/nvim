@@ -1,53 +1,70 @@
+# ------ basics ------
+set encoding=utf-8
 syntax enable
 filetype plugin indent on
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
 
+# ------ plugins ------
 call plug#begin('~/.vim/plugged')
-
-
+Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline'
-if has('nvim')
-  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/denite.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
+" Plug 'vim-airline/vim-airline'
+"if has('nvim')
+"  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/denite.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'mhinz/vim-startify'
-
 call plug#end()
 
+
+# ------ NERDTree ------
 set number
 set t_Co=256   " This is may or may not needed.
 set laststatus=2
-
-let g:solarized_termcolors=256  
-
-set background=dark
+" let g:solarized_termcolors=256  
+set background=light
 " jellyx, herald, jelleybeans
-" colorscheme herald
-
-
-set nobackup
-set nowritebackup
-
-set updatetime=300
-
-set signcolumn=yes
-
+colorscheme papercolor
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
+function! ToggleNERDTree()
+  if exists("g:NERDTree") && g:NERDTree.IsOpen()
+    NERDTreeClose
+  else
+    NERDTreeCWD
+  endif
+endfunction
 
+nnoremap <silent> <Tab> :call ToggleNERDTree()<CR>
+nnoremap <silent> <s-Tab> :NERDTreeCWD<CR>
+
+
+" let g:NERDTreeMinimalMenu=1
+
+let g:NERDCreateDefaultMappings = 1
+
+nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
+
+
+nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
+
+
+
+
+# ------ Coc.nvim ------
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
 nnoremap <silent> K :call ShowDocumentation()<CR>
-
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
@@ -55,7 +72,6 @@ function! ShowDocumentation()
     call feedkeys('K', 'in')
   endif
 endfunction
-
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
@@ -94,46 +110,23 @@ endif
 command! -nargs=0 Format :call CocActionAsync('format')
 
 
-function! ToggleNERDTree()
-  " NERDTree가 실행중인지 확인합니다.
-  if exists("g:NERDTree") && g:NERDTree.IsOpen()
-    " NERDTree가 열려있다면 닫습니다.
-    NERDTreeClose
-  else
-    " 그렇지 않다면 NERDTree를 엽니다.
-    NERDTreeToggle
-  endif
-endfunction
-
-" Tab 키에 ToggleNERDTree 함수를 매핑합니다.
-nnoremap <silent> <Tab> :call ToggleNERDTree()<CR>
-
-
-" let g:NERDTreeMinimalMenu=1
-
-let g:NERDCreateDefaultMappings = 1
-
-nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
-
-
-nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
-
-
 " Applying code actions to the selected code block
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Example: `<c-a-ap` for current paragraph
+xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
+nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
 
 " Remap keys for applying code actions at the cursor position
-nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+" nmap <c-q>  <Plug>(coc-codeaction-cursor)<CR>
 " Remap keys for apply code actions affect whole buffer
-nmap <leader>as  <Plug>(coc-codeaction-source)
+" nmap <c-a-s>  <Plug>(coc-codeaction-source)<CR>
 " Apply the most preferred quickfix action to fix diagnostic on the current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <c-q> <Plug>(coc-fix-current)
 
 " Remap keys for applying refactor code actions
-nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
-nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+" nmap <silent> <c-q> <Plug>(coc-codeaction-refactor)
+" xmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
+" nmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
 
+nnoremap <s-j> <Plug>(coc-diagnostic-next-error)
+nnoremap <s-k> <Plug>(coc-diagnostic-prev-error)
 
