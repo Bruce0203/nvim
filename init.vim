@@ -13,7 +13,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
 " Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline'
+Plug 'Bruce0203/vim-airline-papercolor-theme'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -21,7 +21,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'preservim/nerdtree'
+  Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'mhinz/vim-startify'
@@ -35,7 +35,7 @@ set laststatus=2
 " let g:solarized_termcolors=256  
 set background=light
 " jellyx, herald, jelleybeans
-colorscheme papercolor
+colorscheme PaperColor
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
 function! ToggleNERDTree()
