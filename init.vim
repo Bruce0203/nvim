@@ -9,9 +9,10 @@ set signcolumn=yes
 
 " ------ plugins ------
 call plug#begin('~/.vim/plugged')
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
