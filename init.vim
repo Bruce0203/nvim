@@ -41,7 +41,7 @@ function! ToggleNERDTree()
   if exists("g:NERDTree") && g:NERDTree.IsOpen()
     NERDTreeClose
   else
-    NERDTreeCWD
+    NERDTreeToggle
   endif
 endfunction
 
@@ -127,6 +127,21 @@ nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
 " xmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
 " nmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
 
-nnoremap <s-j> <Plug>(coc-diagnostic-next-error)
-nnoremap <s-k> <Plug>(coc-diagnostic-prev-error)
+nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
+nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
 
+" Symbol renaming
+nmap <s-f> :Format<CR>
+nmap <silent> <s-q> <Plug>(coc-rename)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s)
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+
+" ------ papercolor airline ------
+let g:airline_theme='papercolor'
