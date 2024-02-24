@@ -9,11 +9,14 @@ set signcolumn=yes
 
 " ------ plugins ------
 call plug#begin('~/.vim/plugged')
+Plug 'timonv/vim-cargo'
+Plug 'vim-test/vim-test'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
 " Plug 'flazz/vim-colorschemes'
 Plug 'Bruce0203/vim-airline-papercolor-theme'
+Plug 'tpope/vim-surround'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -132,7 +135,7 @@ nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
 nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
 
 " Symbol renaming
-nmap <s-f> :Format<CR>
+nmap <silent> <s-f> :Format<CR>
 nmap <silent> <s-q> <Plug>(coc-rename)
 
 augroup mygroup
@@ -146,3 +149,17 @@ augroup end
 
 " ------ papercolor airline ------
 let g:airline_theme='papercolor'
+
+" ------ Test ------
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+let g:test#rust#runner = 'cargotest'
+let test#ruby#minitest#options = '--verbose'
+let g:test#rust#cargotest#options = '-- --nocapture'
+
+
+
