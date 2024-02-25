@@ -41,29 +41,17 @@ set background=light
 colorscheme PaperColor
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
-function! ToggleNERDTree()
-  if exists("g:NERDTree") && g:NERDTree.IsOpen()
-    NERDTreeClose
-  else
-    NERDTreeToggle
-  endif
-endfunction
 
-nnoremap <silent> <Tab> :call ToggleNERDTree()<CR>
-nnoremap <silent> <s-Tab> :NERDTreeCWD<CR>
-
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
 " let g:NERDTreeMinimalMenu=1
 
 let g:NERDCreateDefaultMappings = 1
 
-nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
-
-
-nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
-
-
-
+" nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
 
 " ------ Coc.nvim ------
 nmap <silent> gi <Plug>(coc-implementation)
@@ -160,6 +148,4 @@ nmap <silent> <leader>g :TestVisit<CR>
 let g:test#rust#runner = 'cargotest'
 let test#ruby#minitest#options = '--verbose'
 let g:test#rust#cargotest#options = '-- --nocapture'
-
-
 
