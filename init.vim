@@ -1,12 +1,6 @@
 " ------ basics ------
-set encoding=utf-8
 syntax enable
 filetype plugin indent on
-set nobackup
-set nowritebackup
-set updatetime=300
-set signcolumn=yes
-
 " ------ plugins ------
 call plug#begin('~/.vim/plugged')
 Plug 'timonv/vim-cargo'
@@ -54,9 +48,26 @@ let g:NERDCreateDefaultMappings = 1
 " nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
 
 " ------ Coc.nvim ------
+set encoding=utf-8
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
+
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> K :call ShowDocumentation()<CR>
+
+noremap <silent> K :call ShowDocumentation()<CR>
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
@@ -98,10 +109,6 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-" Add `:Format` command to format current buffer
-command! -nargs=0 Format :call CocActionAsync('format')
-
-
 " Applying code actions to the selected code block
 " Example: `<c-a-ap` for current paragraph
 xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
@@ -122,9 +129,25 @@ nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
 nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
 nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
 
+
+" Formatting selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " Symbol renaming
-nmap <silent> <s-f> :Format<CR>
-nmap <silent> <s-q> <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
 augroup mygroup
   autocmd!
@@ -134,6 +157,32 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+" Add `:Format` command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+nmap <silent> <s-f> :Format<CR>
 
 " ------ papercolor airline ------
 let g:airline_theme='papercolor'
