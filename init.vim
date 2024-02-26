@@ -1,7 +1,4 @@
-" ------ basics ------
-syntax enable
-filetype plugin indent on
-" ------ plugins ------
+" ------ basics ------ syntax enable filetype plugin indent on ----- plugins ------
 call plug#begin('~/.vim/plugged')
 Plug 'timonv/vim-cargo'
 Plug 'vim-test/vim-test'
@@ -36,10 +33,20 @@ colorscheme PaperColor
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
 
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+function! IsNerdTreeEnabled()
+    return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
+endfunction
+
+function ToggleNERDTree()
+	"  g:NERDTree.GetWinNum() == vim.current.window ? NERDTreeToggle<CR> : :NERDTreeFocus<CR>
+if  IsNerdTreeEnabled()
+	NERDTreeClose
+else
+	NERDTreeFocus
+endif
+endfunction
+
+nnoremap <silent> <c-n> :call ToggleNERDTree()<CR>
 
 " let g:NERDTreeMinimalMenu=1
 
