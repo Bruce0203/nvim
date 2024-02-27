@@ -1,5 +1,11 @@
-" ------ basics ------ syntax enable filetype plugin indent on ----- plugins ------
+" ------ basics ------
+syntax enable
+filetype plugin indent on
+
+"  ----- plugins ------
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'timonv/vim-cargo'
 Plug 'vim-test/vim-test'
 Plug 'NLKNguyen/papercolor-theme'
@@ -37,16 +43,8 @@ function! IsNerdTreeEnabled()
     return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
 endfunction
 
-function ToggleNERDTree()
-	"  g:NERDTree.GetWinNum() == vim.current.window ? NERDTreeToggle<CR> : :NERDTreeFocus<CR>
-if  IsNerdTreeEnabled()
-	NERDTreeClose
-else
-	NERDTreeFocus
-endif
-endfunction
-
-nnoremap <silent> <c-n> :call ToggleNERDTree()<CR>
+noremap <silent> <leader>t :NERDTreeToggle<CR>
+noremap <silent> <leader>f :NERDTreeFocus<CR>
 
 " let g:NERDTreeMinimalMenu=1
 
@@ -138,8 +136,8 @@ nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
 
 
 " Formatting selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 
 function! ShowDocumentation()
@@ -195,13 +193,13 @@ nmap <silent> <s-f> :Format<CR>
 let g:airline_theme='papercolor'
 
 " ------ Test ------
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
+" nmap <silent> <leader>t :TestNearest<CR>
+" nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
 
 let g:test#rust#runner = 'cargotest'
 let test#ruby#minitest#options = '--verbose'
-let g:test#rust#cargotest#options = '-- --nocapture'
+let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
 
