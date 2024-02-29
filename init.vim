@@ -4,10 +4,10 @@ filetype plugin indent on
 
 "  ----- plugins ------
 call plug#begin('~/.vim/plugged')
+Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'timonv/vim-cargo'
-Plug 'vim-test/vim-test'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
@@ -195,11 +195,20 @@ let g:airline_theme='papercolor'
 " ------ Test ------
 " nmap <silent> <leader>t :TestNearest<CR>
 " nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>a :TestSuite<CR>
 " nmap <silent> <leader>l :TestLast<CR>
 " nmap <silent> <leader>g :TestVisit<CR>
+
+" Zig
+" nmap <silent> <leader>b :terminal zig build
+" nmap <silent> <leader>a :terminal zig run <CR>i
+
+" Rust
+nmap <silent> <leader>b :terminal cargo bench<CR>i
+nmap <silent> <leader>a :terminal cargo test -- --nocapture<CR>i
 
 let g:test#rust#runner = 'cargotest'
 let test#ruby#minitest#options = '--verbose'
 let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
+
 
