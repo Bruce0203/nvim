@@ -204,8 +204,9 @@ let g:airline_theme='papercolor'
 " nmap <silent> <leader>a :terminal zig run <CR>i
 
 " Rust
-nmap <silent> <leader>b :terminal cargo bench<CR>i
-nmap <silent> <leader>a :terminal cargo test -- --nocapture<CR>i
+nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
+nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
+nmap <silent> <leader>c :terminal cargo run<CR>i
 
 let g:test#rust#runner = 'cargotest'
 let test#ruby#minitest#options = '--verbose'
