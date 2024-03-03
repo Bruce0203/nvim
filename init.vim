@@ -1,8 +1,16 @@
 " ------ basics ------
 syntax enable
 filetype plugin indent on
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+cnoreabbrev W w
 
 "  ----- plugins ------
+call vundle#begin()
+Plugin '907th/vim-auto-save'
+call vundle#begin()
+
 call plug#begin('~/.vim/plugged')
 Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -51,6 +59,11 @@ noremap <silent> <leader>f :NERDTreeFocus<CR>
 let g:NERDCreateDefaultMappings = 1
 
 " nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
 
 " ------ Coc.nvim ------
 set encoding=utf-8
@@ -116,8 +129,8 @@ endif
 
 " Applying code actions to the selected code block
 " Example: `<c-a-ap` for current paragraph
-xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
-nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>
+xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
+nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
 
 " Remap keys for applying code actions at the cursor position
 " nmap <c-q>  <Plug>(coc-codeaction-cursor)<CR>
@@ -207,9 +220,14 @@ let g:airline_theme='papercolor'
 nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
 nmap <silent> <leader>c :terminal cargo run<CR>i
+nmap <silent> <leader>n :NERDTreeCWD<CR>
+nmap <silent> <leader>s :Startify<CR>
 
 let g:test#rust#runner = 'cargotest'
 let test#ruby#minitest#options = '--verbose'
 let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
 
+
+" ------ auto save ------
+let g:auto_save = 1  " enable AutoSave on Vim startup
 
