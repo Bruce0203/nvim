@@ -9,7 +9,7 @@ cnoreabbrev W w
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
-call vundle#begin()
+call vundle#end()
 
 call plug#begin('~/.vim/plugged')
 Plug 'ziglang/zig.vim'
@@ -21,6 +21,7 @@ Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
 " Plug 'flazz/vim-colorschemes'
 Plug 'Bruce0203/vim-airline-papercolor-theme'
+Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -219,7 +220,7 @@ let g:airline_theme='papercolor'
 " Rust
 nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
-nmap <silent> <leader>c :terminal cargo run<CR>i
+nmap <silent> <leader>c :terminal cargo run --profile=release<CR>i
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>s :Startify<CR>
 
@@ -230,4 +231,4 @@ let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
 
 " ------ auto save ------
 let g:auto_save = 1  " enable AutoSave on Vim startup
-
+" autocmd TextChanged,TextChangedI <buffer> silent write
