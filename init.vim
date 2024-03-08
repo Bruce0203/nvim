@@ -217,10 +217,17 @@ let g:airline_theme='papercolor'
 " nmap <silent> <leader>b :terminal zig build
 " nmap <silent> <leader>a :terminal zig run <CR>i
 
+" C
+" nmap <silent> <leader>b :terminal gcc main.c -o main && ./main<CR>i
+" nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
+" nmap <silent> <leader>c :terminal gcc main.c -o main && ./main<CR>i
+
 " Rust
 nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
 nmap <silent> <leader>c :terminal cargo run --profile=release<CR>i
+
+
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>s :Startify<CR>
 
