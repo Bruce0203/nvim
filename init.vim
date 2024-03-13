@@ -6,22 +6,22 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 cnoreabbrev W w
 
+nmap <silent> <leader>m :set invnumber<CR>
+
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
 call vundle#end()
 
 call plug#begin('~/.vim/plugged')
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'timonv/vim-cargo'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
-" Plug 'flazz/vim-colorschemes'
-Plug 'Bruce0203/vim-airline-papercolor-theme'
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -38,13 +38,15 @@ call plug#end()
 
 
 " ------ NERDTree ------
-set number
+set nonumber
 set t_Co=256   " This is may or may not needed.
 set laststatus=2
 " let g:solarized_termcolors=256  
-set background=light
+" set background=dark
 " jellyx, herald, jelleybeans
-colorscheme PaperColor
+let g:seoul256_background = 253
+
+colo seoul256
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
 
@@ -204,7 +206,7 @@ omap ac <Plug>(coc-classobj-a)
 nmap <silent> <s-f> :Format<CR>
 
 " ------ papercolor airline ------
-let g:airline_theme='papercolor'
+" let g:airline_theme='papercolor'
 
 " ------ Test ------
 " nmap <silent> <leader>t :TestNearest<CR>
@@ -239,3 +241,5 @@ let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
 " ------ auto save ------
 let g:auto_save = 1  " enable AutoSave on Vim startup
 " autocmd TextChanged,TextChangedI <buffer> silent write
+
+
