@@ -1,10 +1,12 @@
 " ------ basics ------
+set hidden
 syntax enable
 filetype plugin indent on
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 cnoreabbrev W w
+set clipboard=unnamed,unnamedplus
 
 nmap <silent> <leader>m :set invnumber<CR>
 
@@ -14,14 +16,15 @@ Plugin '907th/vim-auto-save'
 call vundle#end()
 
 call plug#begin('~/.vim/plugged')
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'ziglang/zig.vim'
+" Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'timonv/vim-cargo'
 Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
-" Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -43,10 +46,11 @@ set t_Co=256   " This is may or may not needed.
 set laststatus=2
 " let g:solarized_termcolors=256  
 " set background=dark
-" jellyx, herald, jelleybeans
-let g:seoul256_background = 253
+let g:seoul256_background = 237
 
-colo seoul256
+" jellyx, herald, jelleybeans, seoul256
+colo papercolor
+set background=light
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
 
@@ -227,8 +231,8 @@ nmap <silent> <s-f> :Format<CR>
 " Rust
 nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
-nmap <silent> <leader>c :terminal cargo run --profile=release<CR>i
-
+nmap <silent> <leader>d :terminal cargo run<CR>i
+nmap <silent> <leader>c :terminal ./dev.sh<CR>i
 
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>s :Startify<CR>
