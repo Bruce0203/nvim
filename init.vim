@@ -1,20 +1,18 @@
 " ------ basics ------
+cnoreabbrev W w
+set clipboard=unnamed,unnamedplus
+nmap <silent> <leader>m :set invnumber<CR>
 set hidden
 syntax enable
-filetype plugin indent on
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
-cnoreabbrev W w
-set clipboard=unnamed,unnamedplus
-
-nmap <silent> <leader>m :set invnumber<CR>
-
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
 call vundle#end()
 
+filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'rafi/awesome-vim-colorschemes'
