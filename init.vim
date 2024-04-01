@@ -47,8 +47,8 @@ set laststatus=2
 let g:seoul256_background = 237
 
 " jellyx, herald, jelleybeans, seoul256
-colo papercolor
-set background=light
+colo gruvbox
+set background=dark
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
 
@@ -231,6 +231,7 @@ nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
 nmap <silent> <leader>d :terminal cargo run<CR>i
 nmap <silent> <leader>c :terminal ./dev.sh<CR>i
+nmap <silent> <leader>u :AutoSaveToggle<CR>
 
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>s :Startify<CR>
@@ -243,5 +244,4 @@ let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
 " ------ auto save ------
 let g:auto_save = 1  " enable AutoSave on Vim startup
 " autocmd TextChanged,TextChangedI <buffer> silent write
-
 
