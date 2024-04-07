@@ -229,8 +229,9 @@ nmap <silent> <s-f> :Format<CR>
 " Rust
 nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
 nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
-nmap <silent> <leader>d :terminal cargo run<CR>i
-nmap <silent> <leader>c :terminal ./dev.sh<CR>i
+" nmap <silent> <leader>d :terminal cargo run<CR>i
+nmap <silent> <leader>d :terminal ./dev.sh<CR>i
+nmap <silent> <leader>c :terminal ./run.sh<CR>i
 nmap <silent> <leader>u :AutoSaveToggle<CR>
 
 nmap <silent> <leader>n :NERDTreeCWD<CR>
