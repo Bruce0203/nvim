@@ -46,7 +46,7 @@ set laststatus=2
 let g:seoul256_background = 237
 
 " jellyx, herald, jelleybeans, seoul256
-colo papercolor
+colo PaperColor
 set background=dark
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
