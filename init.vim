@@ -38,6 +38,7 @@ call plug#end()
 
 
 " ------ NERDTree ------
+let g:NERDTreeMinimalMenu=1
 set nonumber
 set t_Co=256   " This is may or may not needed.
 set laststatus=2
