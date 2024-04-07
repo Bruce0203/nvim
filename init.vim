@@ -14,7 +14,6 @@ call vundle#end()
 
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -47,7 +46,7 @@ set laststatus=2
 let g:seoul256_background = 237
 
 " jellyx, herald, jelleybeans, seoul256
-colo gruvbox
+colo papercolor
 set background=dark
 " :nmap <Tab> :NERDTreeToggle<CR>
 :set modifiable
