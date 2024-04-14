@@ -14,60 +14,13 @@ call vundle#end()
 
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
-Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'ziglang/zig.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'timonv/vim-cargo'
-Plug 'jbyuki/venn.nvim'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
-if has('nvim')
-  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/denite.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-  Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
-Plug 'mhinz/vim-startify'
 call plug#end()
-
-
-" ------ NERDTree ------
-let g:NERDTreeMinimalMenu=1
-set nonumber
-set t_Co=256   " This is may or may not needed.
-set laststatus=2
-" let g:solarized_termcolors=256  
-" set background=dark
-let g:seoul256_background = 237
-
-" jellyx, herald, jelleybeans, seoul256
-colo PaperColor
-set background=dark
-" :nmap <Tab> :NERDTreeToggle<CR>
-:set modifiable
-
-function! IsNerdTreeEnabled()
-    return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
-endfunction
-
-noremap <silent> <leader>t :NERDTreeToggle<CR>
-noremap <silent> <leader>f :NERDTreeFocus<CR>
-
-" let g:NERDTreeMinimalMenu=1
-
-let g:NERDCreateDefaultMappings = 1
-
-" nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
-
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 
 " ------ Coc.nvim ------
@@ -227,20 +180,13 @@ nmap <silent> <s-f> :Format<CR>
 " nmap <silent> <leader>c :terminal gcc main.c -o main && ./main<CR>i
 
 " Rust
-nmap <silent> <leader>b :terminal cargo bench --profile=release<CR>i
-nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
-" nmap <silent> <leader>d :terminal cargo run<CR>i
+nmap <silent> <leader>b :terminal ./bench.sh<CR>i
+nmap <silent> <leader>a :terminal ./test.sh<CR>i
 nmap <silent> <leader>d :terminal ./dev.sh<CR>i
 nmap <silent> <leader>c :terminal ./run.sh<CR>i
 nmap <silent> <leader>u :AutoSaveToggle<CR>
-
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>s :Startify<CR>
-
-let g:test#rust#runner = 'cargotest'
-let test#ruby#minitest#options = '--verbose'
-let g:test#rust#cargotest#options = '-- --nocapture --test-threads=1'
-
 
 " ------ auto save ------
 let g:auto_save = 1  " enable AutoSave on Vim startup
