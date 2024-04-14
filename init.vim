@@ -14,6 +14,7 @@ call vundle#end()
 
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
