@@ -16,11 +16,44 @@ filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 call plug#end()
+
+" ------ NERDTree ------
+let g:NERDTreeMinimalMenu=1
+set nonumber
+set t_Co=256   " This is may or may not needed.
+set laststatus=2
+" let g:solarized_termcolors=256  
+" set background=dark
+let g:seoul256_background = 237
+
+" jellyx, herald, jelleybeans, seoul256
+colo PaperColor
+set background=dark
+" :nmap <Tab> :NERDTreeToggle<CR>
+:set modifiable
+
+function! IsNerdTreeEnabled()
+    return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
+endfunction
+
+noremap <silent> <leader>t :NERDTreeToggle<CR>
+noremap <silent> <leader>f :NERDTreeFocus<CR>
+
+" let g:NERDTreeMinimalMenu=1
+
+let g:NERDCreateDefaultMappings = 1
+
+" nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 
 " ------ Coc.nvim ------
