@@ -163,8 +163,8 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 nmap <silent> <s-f> :Format<CR>
 
-nmap <silent> <leader>b :tab term [ -f "build.sh" ] && ./build.sh \|\| cargo t<CR>i
-nmap <silent> <leader>t :tab term [ -f "test.sh" ] && ./test.sh \|\| cargo t<CR>i
-nmap <silent> <leader>d :tab term [ -f "dev.sh" ] && ./dev.sh \|\| cargo r<CR>i
+nmap <silent> <leader>b :term [ -f "build.sh" ] && ./build.sh \|\| cargo t<CR>i
+nmap <silent> <leader>t :term [ -f "test.sh" ] && ./test.sh \|\| cargo t<CR>i
+nmap <silent> <leader>d :term [ -f "dev.sh" ] && ./dev.sh \|\| cargo r<CR>i
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 
