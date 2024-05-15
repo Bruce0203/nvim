@@ -7,13 +7,14 @@ syntax enable
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
+
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
 call vundle#end()
-
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
+Plug 'ziglang/zig.vim'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -24,7 +25,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 call plug#end()
 
+" ------ auto save ------
+let g:auto_save = 1  " enable AutoSave on Vim startup
+
 " ------ NERDTree ------
+let g:NERDCreateDefaultMappings = 1
 let g:NERDTreeMinimalMenu=1
 set nonumber
 set t_Co=256   " This is may or may not needed.
@@ -35,8 +40,7 @@ let g:seoul256_background = 237
 
 " jellyx, herald, jelleybeans, seoul256
 colo PaperColor
-set background=dark
-" :nmap <Tab> :NERDTreeToggle<CR>
+set background=light
 :set modifiable
 
 function! IsNerdTreeEnabled()
@@ -46,13 +50,6 @@ endfunction
 noremap <silent> <leader>t :NERDTreeToggle<CR>
 noremap <silent> <leader>f :NERDTreeFocus<CR>
 
-" let g:NERDTreeMinimalMenu=1
-
-let g:NERDCreateDefaultMappings = 1
-
-" nnoremap <silent> <c-_>c} V}:call NERDComment('x', 'toggle')<CR>
-
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
 autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
@@ -63,13 +60,6 @@ set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
-
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
 
 " GoTo code navigation
 nmap <silent> gd <Plug>(coc-definition)
@@ -119,31 +109,11 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-" Applying code actions to the selected code block
-" Example: `<c-a-ap` for current paragraph
 xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
 nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
 
-" Remap keys for applying code actions at the cursor position
-" nmap <c-q>  <Plug>(coc-codeaction-cursor)<CR>
-" Remap keys for apply code actions affect whole buffer
-" nmap <c-a-s>  <Plug>(coc-codeaction-source)<CR>
-" Apply the most preferred quickfix action to fix diagnostic on the current line
-" nmap <c-q> <Plug>(coc-fix-current)
-
-" Remap keys for applying refactor code actions
-" nmap <silent> <c-q> <Plug>(coc-codeaction-refactor)
-" xmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
-" nmap <silent> <c-q>  <Plug>(coc-codeaction-refactor-selected)
-
 nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
 nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
-
-
-" Formatting selected code
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -191,38 +161,10 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-
 nmap <silent> <s-f> :Format<CR>
 
-" ------ papercolor airline ------
-" let g:airline_theme='papercolor'
-
-" ------ Test ------
-" nmap <silent> <leader>t :TestNearest<CR>
-" nmap <silent> <leader>T :TestFile<CR>
-" nmap <silent> <leader>a :TestSuite<CR>
-" nmap <silent> <leader>l :TestLast<CR>
-" nmap <silent> <leader>g :TestVisit<CR>
-
-" Zig
-" nmap <silent> <leader>b :terminal zig build
-" nmap <silent> <leader>a :terminal zig run <CR>i
-
-" C
-" nmap <silent> <leader>b :terminal gcc main.c -o main && ./main<CR>i
-" nmap <silent> <leader>a :terminal cargo test -- --nocapture --test-threads=1<CR>i
-" nmap <silent> <leader>c :terminal gcc main.c -o main && ./main<CR>i
-
-" Rust
-nmap <silent> <leader>b :terminal ./bench.sh<CR>i
-nmap <silent> <leader>a :terminal ./test.sh<CR>i
-nmap <silent> <leader>d :terminal ./dev.sh<CR>i
-nmap <silent> <leader>c :terminal ./run.sh<CR>i
-nmap <silent> <leader>u :AutoSaveToggle<CR>
+nmap <silent> <leader>b :tab term [ -f "build.sh" ] && ./build.sh \|\| cargo t<CR>i
+nmap <silent> <leader>t :tab term [ -f "test.sh" ] && ./test.sh \|\| cargo t<CR>i
+nmap <silent> <leader>d :tab term [ -f "dev.sh" ] && ./dev.sh \|\| cargo r<CR>i
 nmap <silent> <leader>n :NERDTreeCWD<CR>
-nmap <silent> <leader>s :Startify<CR>
-
-" ------ auto save ------
-let g:auto_save = 1  " enable AutoSave on Vim startup
-" autocmd TextChanged,TextChangedI <buffer> silent write
 
