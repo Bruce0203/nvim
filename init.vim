@@ -47,8 +47,6 @@ function! IsNerdTreeEnabled()
     return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
 endfunction
 
-noremap <silent> <leader>t :NERDTreeToggle<CR>
-noremap <silent> <leader>f :NERDTreeFocus<CR>
 
 autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
@@ -109,8 +107,8 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-xmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
-nmap <c-a>  <Plug>(coc-codeaction-selected)<CR>coc#refresh()
+xmap <leader>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
+nmap <leader>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
 
 nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
 nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
@@ -163,8 +161,8 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 nmap <silent> <s-f> :Format<CR>
 
-nmap <silent> <leader>b :term [ -f "build.sh" ] && ./build.sh \|\| cargo t<CR>i
-nmap <silent> <leader>t :term [ -f "test.sh" ] && ./test.sh \|\| cargo t<CR>i
-nmap <silent> <leader>d :term [ -f "dev.sh" ] && ./dev.sh \|\| cargo r<CR>i
+nmap <silent> <leader>b :term [ -e "bench.sh" ] && (./bench.sh \|\| true) \|\| cargo bench<CR>i
+nmap <silent> <leader>t :term [ -e "test.sh" ] && (./test.sh \|\| true) \|\| cargo t -- --nocapture<CR>i
+nmap <silent> <leader>d :term [ -e "dev.sh" ] && (./dev.sh \|\| true) \|\| cargo r<CR>i
 nmap <silent> <leader>n :NERDTreeCWD<CR>
-
+nmap <silent> <leader>f :NERDTreeFocus<CR>
