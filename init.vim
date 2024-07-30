@@ -1,4 +1,6 @@
 " ------ basics ------
+:set fillchars+=vert:\ 
+
 cnoreabbrev W w
 set clipboard=unnamed,unnamedplus
 nmap <silent> <leader>m :set invnumber<CR>
@@ -14,6 +16,7 @@ Plugin '907th/vim-auto-save'
 call vundle#end()
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
+Plug 'vimpostor/vim-lumen'
 Plug 'ziglang/zig.vim'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -35,12 +38,11 @@ set nonumber
 set t_Co=256   " This is may or may not needed.
 set laststatus=2
 " let g:solarized_termcolors=256  
-" set background=dark
+set background=dark
 let g:seoul256_background = 237
 
 " jellyx, herald, jelleybeans, seoul256
 colo PaperColor
-set background=light
 :set modifiable
 
 function! IsNerdTreeEnabled()
@@ -164,5 +166,9 @@ nmap <silent> <s-f> :Format<CR>
 nmap <silent> <leader>b :term [ -e "bench.sh" ] && (./bench.sh \|\| true) \|\| cargo bench<CR>i
 nmap <silent> <leader>t :term [ -e "test.sh" ] && (./test.sh \|\| true) \|\| cargo t -- --nocapture<CR>i
 nmap <silent> <leader>d :term [ -e "dev.sh" ] && (./dev.sh \|\| true) \|\| cargo r<CR>i
+nmap <silent> <leader>e :term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo r<CR>i
+nmap <silent> <leader>0 :colorscheme papercolor \| set bg=light<CR>
+nmap <silent> <leader>1 :colorscheme gruvbox \| set bg=dark<CR> 
+" nmap <silent> <leader>e :tabnew<CR>:term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo check<CR>i
 nmap <silent> <leader>n :NERDTreeCWD<CR>
 nmap <silent> <leader>f :NERDTreeFocus<CR>
