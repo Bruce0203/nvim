@@ -1,23 +1,51 @@
 " ------ basics ------
 :set fillchars+=vert:\ 
-
+set cmdheight=1
 cnoreabbrev W w
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
+
+cnoreabbrev qw wq
+cnoreabbrev Qw wq
+cnoreabbrev qW wq
+cnoreabbrev QW wq
+cnoreabbrev WQ wq
+cnoreabbrev wQ wq
+
+cnoreabbrev QA qa
+cnoreabbrev qA qa
+cnoreabbrev Qa qa
+
+cnoreabbrev Wqa wqa
+cnoreabbrev WQa wqa
+cnoreabbrev WQA wqa
+cnoreabbrev wQa wqa
+cnoreabbrev wQA wqa
+cnoreabbrev wqA wqa
+
 set clipboard=unnamed,unnamedplus
-nmap <silent> <leader>m :set invnumber<CR>
+nmap <silent> <Space>m :set invnumber<CR>
 set hidden
 syntax enable
 set nocompatible              " be iMproved, required
+set modifiable 
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 
+set guioptions-=T
+set signcolumn=yes
+" set foldcolumn=0
+" set fillchars=eob:\ 
+" set colorcolumn=\ 
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
 call vundle#end()
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
-Plug 'vimpostor/vim-lumen'
-Plug 'ziglang/zig.vim'
+" Plug 'vimpostor/vim-lumen'
+Plug 'ralismark/vim-recover'
+Plug 'pappasam/papercolor-theme-slim'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -26,40 +54,83 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
+Plug 'Mofiqul/vscode.nvim'
+Plug 'jbyuki/venn.nvim'
+Plug 'EVODelavega/vim-eazy-timer'
+Plug 'sainnhe/gruvbox-material'
+Plug 'projekt0n/github-nvim-theme'
+Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 
 " ------ auto save ------
 let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_silent = 1  " do not display the auto-save notification
 
 " ------ NERDTree ------
+let NERDTreeChDirMode=2
+let NERDTreeWinPos="left"
+let g:NERDTreeWinSize=9999999
+let g:NERDTreeDirArrowExpandable = ' '
+let g:NERDTreeDirArrowCollapsible = ' '
+" " Hide the current working directory in NERDTree
+" augroup nerdtreehidecwd
+"   autocmd!
+"   autocmd FileType nerdtree setlocal conceallevel=3
+"           \ | syntax match NERDTreeHideCWD #^[</].*$# conceal
+"           \ | setlocal concealcursor=n
+" augroup end
+
+map <C-a> :NERDTreeToggle<CR>
+nnoremap <Space>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+let g:NERDTreeHijackNetrw=0
+let g:NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI=1
 let g:NERDCreateDefaultMappings = 1
 let g:NERDTreeMinimalMenu=1
 set nonumber
-set t_Co=256   " This is may or may not needed.
-set laststatus=2
-" let g:solarized_termcolors=256  
-set background=dark
-let g:seoul256_background = 237
-
-" jellyx, herald, jelleybeans, seoul256
-colo PaperColor
-:set modifiable
-
+set laststatus=0
+let s:hidden_all = 1
+set noshowmode
+set noruler
+set noshowcmd
 function! IsNerdTreeEnabled()
     return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
 endfunction
 
+" nnoremap \d :bp<cr>:bd #<cr>
 
-autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
+
+" ------ theme ------
+" set t_Co=256   " This is may or may not needed.
+
+set bg=dark
+" colo deep-space
+colo github_dark_dimmed
+" colo anderson
+" colorscheme PaperColorSlimLight
+" colo gruvbox
+" colo anderson
+" colo github_dark
+" colo gruvbox-material
+" colorscheme vscode
+
+
+augroup custom_papercolorslim_transparent_background
+  autocmd!
+  autocmd ColorScheme PaperColorSlim highlight Normal guibg=NONE
+augroup end
 
 " ------ Coc.nvim ------
 set encoding=utf-8
 set nobackup
 set nowritebackup
 set updatetime=300
-set signcolumn=yes
+" set signcolumn=yes
 
 " GoTo code navigation
 nmap <silent> gd <Plug>(coc-definition)
@@ -109,8 +180,8 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-xmap <leader>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
-nmap <leader>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
+xmap <Space>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
+nmap <Space>a <Plug>(coc-codeaction-selected)<CR>coc#refresh()
 
 nnoremap <c-j> <Plug>(coc-diagnostic-next-error)
 nnoremap <c-k> <Plug>(coc-diagnostic-prev-error)
@@ -127,7 +198,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
+nmap <Space>rn <Plug>(coc-rename)
 
 augroup mygroup
   autocmd!
@@ -163,12 +234,26 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 nmap <silent> <s-f> :Format<CR>
 
-nmap <silent> <leader>b :term [ -e "bench.sh" ] && (./bench.sh \|\| true) \|\| cargo bench<CR>i
-nmap <silent> <leader>t :term [ -e "test.sh" ] && (./test.sh \|\| true) \|\| cargo t -- --nocapture<CR>i
-nmap <silent> <leader>d :term [ -e "dev.sh" ] && (./dev.sh \|\| true) \|\| cargo r<CR>i
-nmap <silent> <leader>e :term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo r<CR>i
-nmap <silent> <leader>0 :colorscheme papercolor \| set bg=light<CR>
-nmap <silent> <leader>1 :colorscheme gruvbox \| set bg=dark<CR> 
-" nmap <silent> <leader>e :tabnew<CR>:term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo check<CR>i
-nmap <silent> <leader>n :NERDTreeCWD<CR>
-nmap <silent> <leader>f :NERDTreeFocus<CR>
+nmap <silent> <Space>b :tab term [ -e "bench.sh" ] && (./bench.sh \|\| true) \|\| cargo bench -- --nocapture<CR>i
+nmap <silent> <Space>i :tab ter<CR>i
+nmap <silent> <Space>t :tab term [ -e "test.sh" ] && (./test.sh \|\| true) \|\| cargo t -- --nocapture --test-threads=1<CR>i
+nmap <silent> <Space>d :tab ter [ -e "dev.sh" ] && (./dev.sh \|\| true) \|\| cargo r<CR>i
+nmap <silent> <Space>e :tab term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo check<CR>i
+nmap <silent> <Space>1 :set bg=light<CR>:colo PaperColorSlim<CR>
+nmap <silent> <Space>2 :set bg=dark<CR>:colo gruvbox<CR>
+" nmap <silent> <Space>e :tabnew<CR>:term [ -e "debug.sh" ] && (./debug.sh \|\| true) \|\| cargo check<CR>i
+nmap <silent> <Space>n :NERDTreeCWD<CR>
+nmap <silent> <Space>f :NERDTreeFocus<CR>A
+
+inoremap <C-/> \|
+inoremap <C-.> \
+
+" penumbra+
+" rose_pine
+" snazzy
+" sonokai
+" tokyonight_moon
+" varua
+" vim_dark_highcontrast
+" yo
+" zed
