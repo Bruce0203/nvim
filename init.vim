@@ -1,5 +1,6 @@
+
 " ------ basics ------
-:set fillchars+=vert:\ 
+:set fillchars+=vert:\
 set cmdheight=1
 cnoreabbrev W w
 cnoreabbrev Wq wq
@@ -28,15 +29,15 @@ nmap <silent> <Space>m :set invnumber<CR>
 set hidden
 syntax enable
 set nocompatible              " be iMproved, required
-set modifiable 
+set modifiable
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 
 set guioptions-=T
 set signcolumn=yes
 " set foldcolumn=0
-" set fillchars=eob:\ 
-" set colorcolumn=\ 
+" set fillchars=eob:\
+" set colorcolumn=\
 "  ----- plugins ------
 call vundle#begin()
 Plugin '907th/vim-auto-save'
@@ -109,6 +110,7 @@ endfunction
 " set t_Co=256   " This is may or may not needed.
 
 set bg=dark
+" colo PaperColorSlim
 " colo deep-space
 colo github_dark_dimmed
 " colo anderson
@@ -257,3 +259,5 @@ inoremap <C-.> \
 " vim_dark_highcontrast
 " yo
 " zed
+
+
